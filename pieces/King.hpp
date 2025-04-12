@@ -43,5 +43,5 @@ public:
     * 
     * @return True if the King can move to the specified position; false otherwise.
     */
-   virtual bool canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const override;
+   virtual bool canMove(int target_row, int target_col, std::vector<std::vector<ChessPiece*>> board) const override;
 };

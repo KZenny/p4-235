@@ -36,7 +36,7 @@ Bishop::Bishop(const std::string& color, const int& row, const int& col, const b
  * 
  * @return True if the Bishop can move to the specified position; false otherwise.
  */
- bool Bishop::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+ bool Bishop::canMove(int target_row, int target_col, std::vector<std::vector<ChessPiece*>> board) const {
     // Check if the target position is within the board's bounds
     if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH) {
         return false;
