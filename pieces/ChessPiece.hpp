@@ -174,5 +174,5 @@ class ChessPiece {
    * @note This function is pure virtual and must be implemented by derived classes for specific 
    *       piece behavior (e.g., King, Queen, Knight, etc.).
    */
-   virtual bool canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const = 0;
+   virtual bool canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) = 0;
 };
