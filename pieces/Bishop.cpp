@@ -36,7 +36,7 @@ Bishop::Bishop(const std::string& color, const int& row, const int& col, const b
  * 
  * @return True if the Bishop can move to the specified position; false otherwise.
  */
-bool Bishop::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+bool Bishop::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const override{
     int current_row = getRow();
     int current_col = getColumn();
 
