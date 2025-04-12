@@ -36,37 +36,45 @@ Bishop::Bishop(const std::string& color, const int& row, const int& col, const b
  * 
  * @return True if the Bishop can move to the specified position; false otherwise.
  */
- bool Bishop::canMove(int target_row, int target_col, std::vector<std::vector<ChessPiece*>> board) const {
-    // Check if the target position is within the board's bounds
-    if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH) {
+ bool Bishop::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+    int current_row = getRow();
+    int current_col = getColumn();
+
+    // Check 1: Stay within bounds
+    if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH)
         return false;
-    }
 
-    // Check if the Bishop is trying to move to its current position
-    if (target_row == row_ && target_col == column_) {
+    // Check 2: Can't stand still
+    if (target_row == current_row && target_col == current_col)
         return false;
-    }
 
-    // Check if the Bishop is moving diagonally
-    if (std::abs(target_row - row_) != std::abs(target_col - column_)) {
+    // Check 3: Must move diagonally
+    if (std::abs(target_row - current_row) != std::abs(target_col - current_col))
         return false;
-    }
 
-    // Check for unobstructed path
-    int row_step = (target_row > row_) ? 1 : -1;
-    int col_step = (target_col > column_) ? 1 : -1;
+    // Determine direction of movement (delta row & col)
+    int row_step = (target_row > current_row) ? 1 : -1;
+    int col_step = (target_col > current_col) ? 1 : -1;
 
-    for (int r = row_ + row_step, c = column_ + col_step; r != target_row && c != target_col; r += row_step, c += col_step) {
+    int r = current_row + row_step;
+    int c = current_col + col_step;
+
+    // Check 4: All squares between current and target must be empty
+    while (r != target_row && c != target_col) {
         if (board[r][c] != nullptr) {
-            return false; // Path is obstructed
+            return false;
         }
+        r += row_step;
+        c += col_step;
     }
 
-    // Check if the target square is empty or contains a piece of another color
+    // Check 5: Final square must be empty or occupied by enemy
     ChessPiece* target_piece = board[target_row][target_col];
-    if (target_piece != nullptr && target_piece->getColor() == color_) {
-        return false; // Cannot capture own piece
+    if (target_piece == nullptr) {
+        return true; // empty square
+    } else if (target_piece->getColor() != getColor()) {
+        return true; // capture enemy piece
     }
 
-    return true; // Valid move  
+    return false; // occupied by friendly piece
 }

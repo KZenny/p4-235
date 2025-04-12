@@ -170,23 +170,3 @@ bool ChessPiece::hasMoved() const {
 }
 
 // YOUR CODE HERE ===========================
-/**
- * @brief Determines whether the ChessPiece can move to a specified target position on the board.
- *
- * The validity of the move is determined dynamically at 
- * runtime and depends on the specific implementation in derived classes.
- *
- * @param target_row An integer representing the row of the target position on the board.
- * @param target_col An integer reprsenting the col of the target position on the board.
- * @param board A const reference to a 2D vector of ChessPiece pointers 
- *              representing the chessboard, where each cell contains a
- *              pointer to a ChessPiece or nullptr if the cell is empty.
- * 
- * @return True if the piece can move to the specified position; false otherwise.
- * 
- * @note This function is pure virtual and must be implemented by derived classes for specific 
- *       piece behavior (e.g., King, Queen, Knight, etc.).
- */
-bool ChessPiece::canMove(int target_row,int target_col, const std::vector<std::vector<ChessPiece*>>& board) const{
-    //pure virtual function 
-}

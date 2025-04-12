@@ -37,37 +37,45 @@ Queen::Queen(const std::string& color, const int& row, const int& col, const boo
  * 
  * @return True if the Queen can move to the specified position; false otherwise.
  */
- bool Queen::canMove(int target_row, int target_col, std::vector<std::vector<ChessPiece*>> board) const {
-    // Check if the target position is within the board's bounds
-    if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH) {
+ bool Queen::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+    int curr_row = getRow();
+    int curr_col = getColumn();
+
+    // 1. Stay within bounds
+    if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH)
+        return false;
+
+    // 2. Can't move to current position
+    if (target_row == curr_row && target_col == curr_col)
+        return false;
+
+    // Determine direction of movement
+    int row_diff = target_row - curr_row;
+    int col_diff = target_col - curr_col;
+
+    int row_step = (row_diff == 0) ? 0 : (row_diff > 0 ? 1 : -1);
+    int col_step = (col_diff == 0) ? 0 : (col_diff > 0 ? 1 : -1);
+
+    // 3. Check if movement is straight or diagonal
+    if (!(row_step == 0 || col_step == 0 || std::abs(row_diff) == std::abs(col_diff))) {
         return false;
     }
 
-    // Check if the Queen is trying to move to its current position
-    if (target_row == row_ && target_col == column_) {
-        return false;
+    // 4. Check if path is clear (excluding target square)
+    int r = curr_row + row_step;
+    int c = curr_col + col_step;
+    while (r != target_row || c != target_col) {
+        if (board[r][c] != nullptr)
+            return false;
+        r += row_step;
+        c += col_step;
     }
 
-    // Check if the Queen is moving vertically, horizontally, or diagonally
-    if (target_row != row_ && target_col != column_ && std::abs(target_row - row_) != std::abs(target_col - column_)) {
-        return false;
+    // 5. Check destination square: must be empty or opponent's piece
+    ChessPiece* destination = board[target_row][target_col];
+    if (destination == nullptr) {
+        return true;
+    } else {
+        return destination->getColor() != getColor();
     }
-
-    // Check for unobstructed path
-    int row_step = (target_row > row_) ? 1 : (target_row < row_) ? -1 : 0;
-    int col_step = (target_col > column_) ? 1 : (target_col < column_) ? -1 : 0;
-
-    for (int r = row_ + row_step, c = column_ + col_step; r != target_row || c != target_col; r += row_step, c += col_step) {
-        if (board[r][c] != nullptr) {
-            return false; // Path is obstructed
-        }
-    }
-
-    // Check if the target square is empty or contains a piece of another color
-    ChessPiece* target_piece = board[target_row][target_col];
-    if (target_piece != nullptr && target_piece->getColor() == color_) {
-        return false; // Cannot capture own piece
-    }
-
-    return true; // Valid move
- }
+}
