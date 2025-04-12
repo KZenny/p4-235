@@ -37,7 +37,7 @@ Queen::Queen(const std::string& color, const int& row, const int& col, const boo
  * 
  * @return True if the Queen can move to the specified position; false otherwise.
  */
- bool Queen::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+bool Queen::canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
     int curr_row = getRow();
     int curr_col = getColumn();
 
