@@ -43,6 +43,6 @@ public:
     * 
     * @return True if the Bishop can move to the specified position; false otherwise.
     */
-    bool canMove(int target_row, int target_col, const std::vector<std::vector<ChessPiece*>>& board) const override;
+    bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const ;
 
 };

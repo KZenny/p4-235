@@ -56,5 +56,5 @@ class Pawn : public ChessPiece {
          * 3. The move is invalid if the target square is outside the bounds of the board.
          * 
          */
-        bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const ;
+        bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const;
 };

@@ -64,5 +64,5 @@ class Rook : public ChessPiece {
          * 3. The move is valid if the target square is empty or contains a piece of a different color (capturing) or if it is castling with a laterally adjacent piece.
          * 4. The move is invalid if the target square is outside the bounds of the board.
          */
-        bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const ;
+        bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const;
 };

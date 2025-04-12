@@ -42,5 +42,5 @@ public:
      * 
      * @note Capturing an opponent's piece by landing on its position is considered a valid move.
      */
-    bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const ;
+    bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const;
 };
