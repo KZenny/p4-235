@@ -38,30 +38,45 @@ Queen::Queen(const std::string& color, const int& row, const int& col, const boo
  * @return True if the Queen can move to the specified position; false otherwise.
  */
 bool Queen::canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+    // Find the current position of the Queen
     int curr_row = getRow();
     int curr_col = getColumn();
 
-    // 1. Stay within bounds
+    // Check if the target is within bounds
     if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH)
         return false;
 
-    // 2. Can't move to current position
+    // Check if the target position is the same as the Queen's current position
     if (target_row == curr_row && target_col == curr_col)
         return false;
 
     // Determine direction of movement
     int row_diff = target_row - curr_row;
     int col_diff = target_col - curr_col;
+    int row_step;
+    int col_step;
+    if (row_diff > 0) {
+        row_step = 1;
+    } else if (row_diff < 0) {
+        row_step = -1;
+    } else {
+        row_step = 0;
+    }
 
-    int row_step = (row_diff == 0) ? 0 : (row_diff > 0 ? 1 : -1);
-    int col_step = (col_diff == 0) ? 0 : (col_diff > 0 ? 1 : -1);
+    if (col_diff > 0) {
+        col_step = 1;
+    } else if (col_diff < 0) {
+        col_step = -1;
+    } else {
+        col_step = 0;
+    }
 
-    // 3. Check if movement is straight or diagonal
+    // Check if the Queen wants to move in a straight line or horizontally or vertically
     if (!(row_step == 0 || col_step == 0 || std::abs(row_diff) == std::abs(col_diff))) {
         return false;
     }
 
-    // 4. Check if path is clear (excluding target square)
+    // Check if the path to the target square from the Queen's current position is empty
     int r = curr_row + row_step;
     int c = curr_col + col_step;
     while (r != target_row || c != target_col) {
@@ -71,7 +86,7 @@ bool Queen::canMove(const int& target_row, const int& target_col, const std::vec
         c += col_step;
     }
 
-    // 5. Check destination square: must be empty or opponent's piece
+    // Check if the target square is empty or occupied by an enemy piece
     ChessPiece* destination = board[target_row][target_col];
     if (destination == nullptr) {
         return true;

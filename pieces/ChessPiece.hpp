@@ -175,6 +175,4 @@ class ChessPiece {
    *       piece behavior (e.g., King, Queen, Knight, etc.).
    */
    virtual bool canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const = 0;
-
-   virtual ~ChessPiece() = default;
 };

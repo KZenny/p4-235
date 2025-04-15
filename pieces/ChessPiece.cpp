@@ -170,3 +170,5 @@ bool ChessPiece::hasMoved() const {
 }
 
 // YOUR CODE HERE ===========================
+
+//canMove is a pure virtual function. No implementation is neccessary. 

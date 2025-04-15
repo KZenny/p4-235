@@ -35,31 +35,32 @@ King::King(const std::string& color, const int& row, const int& col, const bool&
  * @return True if the King can move to the specified position; false otherwise.
  */
 bool King::canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+    // Find the current position of the King
     int current_row = getRow();
     int current_col = getColumn();
 
-    // Rule 3: Check if target is within bounds
+    // Check if target is within bounds
     if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH) {
         return false;
     }
 
-    // Rule 4: Cannot move to the same position
+    // Cannot move to the same position
     if (target_row == current_row && target_col == current_col) {
         return false;
     }
 
-    // Rule 1: King can move one square in any direction
+    // King can move only one square in any direction
     int row_diff = std::abs(target_row - current_row);
     int col_diff = std::abs(target_col - current_col);
     if (row_diff > 1 || col_diff > 1) {
         return false;
     }
 
-    // Rule 2: Target must be empty or occupied by an enemy piece
+    // Check if the target square is empty or occupied by an enemy piece
     ChessPiece* destination = board[target_row][target_col];
     if (destination == nullptr) {
         return true; // Empty square
     } else {
-        return destination->getColor() != getColor(); // Capture only if enemy
+        return destination->getColor() != getColor(); // Capture only if enemy (ie. different colors)
     }
  }

@@ -37,29 +37,41 @@ Bishop::Bishop(const std::string& color, const int& row, const int& col, const b
  * @return True if the Bishop can move to the specified position; false otherwise.
  */
 bool Bishop::canMove(const int& target_row, const int& target_col, const std::vector<std::vector<ChessPiece*>>& board) const {
+    // Find the current position of the Bishop
     int current_row = getRow();
     int current_col = getColumn();
 
-    // Check 1: Stay within bounds
+    // Check if the target is within bounds
     if (target_row < 0 || target_row >= BOARD_LENGTH || target_col < 0 || target_col >= BOARD_LENGTH)
         return false;
 
-    // Check 2: Can't stand still
+    // Check if the target position is the same as the Bishop's current position
     if (target_row == current_row && target_col == current_col)
         return false;
 
-    // Check 3: Must move diagonally
+    // Check if the movement is diagonal
     if (std::abs(target_row - current_row) != std::abs(target_col - current_col))
         return false;
 
-    // Determine direction of movement (delta row & col)
-    int row_step = (target_row > current_row) ? 1 : -1;
-    int col_step = (target_col > current_col) ? 1 : -1;
+    // Determine direction of movement
+    int row_step; 
+    int col_step; 
+    if (target_row > current_row) {
+        row_step = 1;
+    } else {
+        row_step = -1;
+    }
+
+    if (target_col < current_col) {
+        col_step = -1;
+    } else {
+        col_step = 1;
+    }
 
     int r = current_row + row_step;
     int c = current_col + col_step;
 
-    // Check 4: All squares between current and target must be empty
+    // Check if the path between current and target positions are empty
     while (r != target_row && c != target_col) {
         if (board[r][c] != nullptr) {
             return false;
@@ -68,7 +80,7 @@ bool Bishop::canMove(const int& target_row, const int& target_col, const std::ve
         c += col_step;
     }
 
-    // Check 5: Final square must be empty or occupied by enemy
+    // Check if the target square is empty or occupied by an enemy piece
     ChessPiece* target_piece = board[target_row][target_col];
     if (target_piece == nullptr) {
         return true; // empty square
